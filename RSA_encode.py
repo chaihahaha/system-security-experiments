@@ -1,4 +1,5 @@
 from random import randrange, getrandbits, randint
+from sympy.ntheory.primetest import isprime
 from RSA_functions import *
 
 def is_prime(n, k=128):
@@ -55,7 +56,7 @@ def generate_prime_number(length=1024):
     """
     p = 4
     # keep generating while the primality test fail
-    while not is_prime(p, 128):
+    while not isprime(p):
         p = generate_prime_candidate(length)
     # print("prime generated: %d" %p)
     return p
