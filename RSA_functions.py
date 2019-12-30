@@ -1,3 +1,4 @@
+import base64
 def xgcd(a, b):
     """return (g, x, y) such that a*x + b*y = g = gcd(a, b)"""
     x0, x1, y0, y1 = 0, 1, 1, 0
@@ -24,3 +25,8 @@ def int2string(n):
     hx = hex(n)
     bts = bytes.fromhex(hx[2:])
     return bts.decode("utf8")
+def int2ascii(n):
+    return base64.b64encode(n.to_bytes(n.bit_length()//8+1,byteorder='big')).decode('ascii')
+
+def ascii2int(s):
+    return int.from_bytes(base64.b64decode(s.encode('ascii')),byteorder='big')
