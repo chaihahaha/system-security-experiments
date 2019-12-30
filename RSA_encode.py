@@ -84,12 +84,12 @@ def rsa_encode(st, prime_max=256):
     d = randint(2, phi)
     while e * d % phi != 1:
         e = randint(2, phi)
-        d = mulinv(e, phi)
+        d = modular_inverse(e, phi)
         if not d:
             d = -1
-    e_str = int2ascii(e)
-    n_str = int2ascii(n)
-    d_str = int2ascii(d)
+    e_str = int2base64string(e)
+    n_str = int2base64string(n)
+    d_str = int2base64string(d)
     print("Public keys:")
     print("e: " +(e_str))
     print("n: " +(n_str))
@@ -99,7 +99,7 @@ def rsa_encode(st, prime_max=256):
     print("d: " +(d_str))
     #print("d: %d" %(d))
     c = pow(m, e, n)
-    c_str = int2ascii(c)
+    c_str = int2base64string(c)
     return c_str
 
 print(rsa_encode("fuck youd"))
