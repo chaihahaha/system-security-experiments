@@ -37,8 +37,8 @@ def int2string(n):
 
 def int2base64string(n):
     # for nicer displaying of public key
-    return base64.b64encode(n.to_bytes(n.bit_length()//8+1,byteorder='big')).decode('ascii')
+    return base64.b64encode(n.to_bytes(n.bit_length()//8+1,byteorder='big')).decode('latin-1')
 
 def base64string2int(s):
     # to get int pubkey from base64 string
-    return int.from_bytes(base64.b64decode(s.encode('ascii')),byteorder='big')
+    return int.from_bytes(base64.b64decode(s.encode('latin-1')),byteorder='big')
