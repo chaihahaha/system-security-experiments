@@ -1,0 +1,47 @@
+Initial clauses:
+Clause 14: c:(v_25,v_26) -> c:v_26
+Clause 13: c:(v_20,v_21) -> c:v_20
+Clause 12: c:v_18 & c:v_19 -> c:(v_18,v_19)
+Clause 11: c:c[]
+Clause 10: c:pk(sA[])
+Clause 9: c:pk(sB[])
+Clause 8: c:x_17 & c:encrypt(m_16,pk(x_17)) -> c:m_16
+Clause 7: c:x_15 -> c:pk(x_15)
+Clause 6: c:x_14 & c:y_13 -> c:encrypt(x_14,y_13)
+Clause 5: c:pk(x_12) -> c:encrypt((Na[pk(x_12)],pk(sA[])),pk(x_12))
+Clause 4: c:pk(x_10) & c:encrypt((Na[pk(x_10)],y_11),pk(sA[])) -> c:encrypt((y_11,k[pk(x_10)]),pk(x_10))
+Clause 3: c:encrypt((x_8,y_9),pk(sB[])) -> c:encrypt((x_8,Nb[x_8,y_9]),y_9)
+Clause 2: c:encrypt((x_6,pk(sA[])),pk(sB[])) & c:encrypt((Nb[x_6,pk(sA[])],z_7),pk(sB[])) -> c:encrypt(secret[],pk(z_7))
+Clause 1: c:new-name[!att = v_4]
+Completing...
+goal reachable: c:secret[]
+Abbreviations:
+Na_190 = Na[pk(x_174)]
+Nb_191 = Nb[Na_190,pk(sA[])]
+k_192 = k[pk(x_174)]
+clause 8 c:secret[]
+    duplicate c:x_188
+    clause 2 c:encrypt(secret[],pk(x_188))
+        duplicate c:encrypt((Na_190,pk(sA[])),pk(sB[]))
+        clause 6 c:encrypt((Nb_191,x_188),pk(sB[]))
+            apply 2-tuple c:(Nb_191,x_188)
+                apply 1-proj-2-tuple c:Nb_191
+                    clause 8 c:(Nb_191,k_192)
+                        duplicate c:x_174
+                        clause 4 c:encrypt((Nb_191,k_192),pk(x_174))
+                            duplicate c:pk(x_174)
+                            clause 3 c:encrypt((Na_190,Nb_191),pk(sA[]))
+                                clause 6 c:encrypt((Na_190,pk(sA[])),pk(sB[]))
+                                    apply 2-tuple c:(Na_190,pk(sA[]))
+                                        apply 1-proj-2-tuple c:Na_190
+                                            clause 8 c:(Na_190,pk(sA[]))
+                                                duplicate c:x_174
+                                                clause 5 c:encrypt((Na_190,pk(sA[])),pk(x_174))
+                                                    clause 7 c:pk(x_174)
+                                                        any c:x_174
+                                        clause 10 c:pk(sA[])
+                                    duplicate c:pk(sB[])
+                any c:x_188
+            clause 9 c:pk(sB[])
+
+RESULT goal reachable: c:secret[]

@@ -1,0 +1,49 @@
+/* 
+ * Fixed protocol
+ */
+
+// PKI infrastructure
+
+const pk: Function;
+secret sk: Function;
+inversekeys (pk,sk);
+
+// The protocol description
+
+protocol protocol1(I,R)
+{
+	role I
+	{
+		const ni: Nonce;
+		var nr: Nonce;
+
+		send_1(I,R, {R,ni,I}pk(R) );
+		read_2(R,I, {ni,nr,R}pk(I) );
+		send_3(I,R, {nr}pk(R) );
+
+		claim_i1(I,Secret,ni);
+		claim_i2(I,Secret,nr);
+		claim_i3(I,Nisynch);
+	}
+
+	role R
+	{
+		var ni: Nonce;
+		const nr: Nonce;
+
+		read_1(I,R, {R,ni,I}pk(R) ); // add identification I
+		send_2(R,I, {ni,nr,R}pk(I) );
+		read_3(I,R, {nr}pk(R) );
+
+		claim_r1(R,Secret,ni);
+		claim_r2(R,Secret,nr);
+		claim_r3(R,Nisynch);
+	}
+}
+
+// An untrusted agent, with leaked information
+
+const Eve: Agent;
+untrusted Eve;
+compromised sk(Eve);
+

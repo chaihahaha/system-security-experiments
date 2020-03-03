@@ -1,0 +1,56 @@
+/* 
+   A key exchange protocol
+*/
+
+// PKI
+
+const pk: Function;
+secret sk: Function;
+inversekeys (pk,sk);
+
+// Hash function: nobody knows the inverse
+
+const hash: Function;
+secret unhash: Function;
+inversekeys (hash,unhash);
+
+// User type declaration
+
+usertype Key;
+
+// Protocol description
+
+protocol protocol2(I,R)
+{
+	role I
+	{
+		const ni: Nonce;
+		var nr: Nonce;
+		var kir: Key;
+
+		send_1 (I,R, { hash(ni, I) }pk(R) );
+		read_2 (R,I, { hash(ni, R),kir }pk(I) );
+		send_3 (I,R, { hash(I) }kir );
+		claim_i1 (I, Secret, kir );
+		claim_i2 (I, Nisynch );
+	}
+
+	role R
+	{
+		var ni: Nonce;
+		const nr: Nonce;
+		const kir: Key;
+
+		read_1 (I,R, { hash(ni, I) }pk(R) );
+		send_2 (R,I, { hash(ni, R),kir }pk(I) );
+		read_3 (I,R, { hash(I) }kir );
+		claim_r1 (R, Secret, kir );
+		claim_r2 (R, Nisynch );
+	}
+}
+
+// An untrusted agent, with compromised key
+
+const e: Agent;
+untrusted e;
+compromised sk(e);
