@@ -233,10 +233,10 @@ ATTACK TRACE
 
     \section*{2. Understand the results}
 
-        For OFMC(file \emph{NSPK.ofmc}), the summary is \emph{unsafe}, which correct about NSPK. The attack will focus on the secret which is identified with the constant \emph{nb}, which means the variable \emph{Nb'} sent by bob is not a secret of agent set \{A, B \} anymore, where A plays role alice and B plays role bob. The attack trace is a standard \emph{man-in-the-middle} attack. Intruder i sends \emph{start} to a, a sends back \emph{Na} and \emph{a} back, then
+        For OFMC(file \emph{NSPK.ofmc}), the summary is \emph{unsafe}, which is correct about NSPK. The attack will focus on the secret which is identified with the constant \emph{nb}, which means the variable \emph{Nb'} sent by bob is not a secret of agent set \{A, B \} anymore, where A plays role alice and B plays role bob. The attack trace is a standard \emph{man-in-the-middle} attack. Intruder i sends \emph{start} to a, a sends back \emph{Na} and \emph{a} back, then
         \emph{i} fakes sender \emph{a}, and sends \emph{Na} and \emph{a} encrypted with \emph{kb} to \emph{b}. \emph{b} thinks the sender is \emph{a} and sends the target \emph{Nb} encrypted with \emph{ka} back. In the end, \emph{i} uses \emph{a} to decrypt the target \emph{Nb}. So the secret \emph{Nb} is compromised. The secret is lost because of lack of authentication on the sender.
             
-        For Cl-Atse(file \emph{NSPK.cl-atse}), the attack is also on \emph{Nb}. Intruder \emph{i} sends \emph{start} to \emph{a} and \emph{a} sends back \emph{Na} and \emph{a}. Then \emph{i} fakes \emph{b} and send start to \emph{a} and \emph{a} sends \emph{Na} and \emph{a} encrypted with \emph{kb} to \emph{i}, which is then sent to \emph{b}. \emph{b} sends back to \emph{i} the target \emph{Nb} encrypted with \emph{ka} which is encrypted by utilizing \emph{a}.
+        For Cl-Atse(file \emph{NSPK.cl-atse}), the attack is also on \emph{Nb}. Intruder \emph{i} sends \emph{start} to \emph{a} and \emph{a} sends back \emph{Na} and \emph{a}. Then \emph{i} fakes \emph{b} and send start to \emph{a} and \emph{a} sends \emph{Na} and \emph{a} encrypted with \emph{kb} to \emph{i}, which is then sent to \emph{b}. \emph{b} sends back to \emph{i} the target \emph{Nb} encrypted with \emph{ka} which is decrypted by utilizing \emph{a}.
             
         For SATMC(file \emph{NSPK.satmc}), the attack is also on \emph{Nb}. The attack trace is exactly the same as OFMC.
             
@@ -660,7 +660,7 @@ c:encrypt((x,y), pk(sB[])) -> c:encrypt((x, Nb[x,y]), y); (* B receives x and y,
 c:encrypt((x,pk(sA[])), pk(sB[])) & c:encrypt((Nb[x, pk(sA[])], z), pk(sB[]))
    -> c:encrypt(secret[], pk(z)). (* B receives x and pkA(==A) and Nb, z encrypted with pkB, sends secret encrypted with z *)
         \end{lstlisting}
-        The cheching result is as follows.
+        The checking result is as follows.
         \begin{lstlisting}[frame=single]
 Initial clauses:
 Clause 18: c:(v_49,v_50) -> c:v_50
